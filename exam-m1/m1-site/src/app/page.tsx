@@ -1,25 +1,13 @@
 'use client';
-import { useState } from 'react';
 import './App.css';
-import { GlobalLayout } from './GlobalLayout';
-import { Hello } from './Hello';
 
-function App() {
-  const [name, setName] = useState<string>('Gérald')
-  const [newName, setNewName] = useState<string>('')
-
-  const onValidate = () => {
-    setName(newName)
-    setNewName('')
-  }
-
+function Home() {
   return (
-    <GlobalLayout>
-      <Hello name={name}>How are you ?</Hello>
-      <input value={newName} onChange={(e) => setNewName(e.target.value)} />
-      <button onClick={onValidate}>Ok</button>
-    </GlobalLayout>
+    <div className="text-center">
+      <h1 className="text-4xl font-bold mb-4">Bienvenue à la Bibliothèque</h1>
+      <p className="text-gray-700">Gérez vos livres et auteurs facilement.</p>
+    </div>
   );
 }
 
-export default App;
+export default Home;

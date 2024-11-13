@@ -1,38 +1,60 @@
-import { FC, useState } from "react"
-import { CreateBookModel } from "../models/BookModel"
-import { Button } from "./Button"
-import { Modal } from "./Modal"
+'use client';
 
-type Props = {
-  onCreate: (book: CreateBookModel) => void
+interface CreateBookFormProps {
+  onSubmit: (book: { title: string; author: string; year: number }) => void;
 }
 
-export const CreateBookForm: FC<Props> = ({ onCreate }) => {
-  const [newBookName, setNewBookName] = useState<string>('')
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+export default function CreateBookForm({ onSubmit }: CreateBookFormProps) {
+  const [title, setTitle] = useState('');
+  const [author, setAuthor] = useState('');
+  const [year, setYear] = useState('');
 
-  const onCancel = () => {
-    setIsModalOpen(false)
-    setNewBookName('')
-  }
-
-  const onOk = () => {
-    onCreate({ title: newBookName, yearPublished: 2000, authorId: '9bef29d9-895b-4200-b70d-ea04be03c364' })
-    onCancel()
-  }
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit({ title, author, year: parseInt(year) });
+    setTitle('');
+    setAuthor('');
+    setYear('');
+  };
 
   return (
-  <div>
-    <Button onClick={() => setIsModalOpen(true)}>Create book</Button>
-    <Modal
-      isOpen={isModalOpen}
-      title="Create a new book"
-      onCancel={onCancel}
-      onClose={onCancel}
-      onOk={onOk}
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium">Titre</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Auteur</label>
+        <input
+          type="text"
+          value={author}
+          onChange={(e) => setAuthor(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium">Année</label>
+        <input
+          type="number"
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
+          required
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full bg-blue-500 text-white p-2 rounded"
       >
-      <p>Book name: </p>
-      <input value={newBookName} onChange={(e) => setNewBookName(e.target.value)} />
-    </Modal>
-  </div>)
+        Ajouter le Livre
+      </button>
+    </form>
+  );
 }
