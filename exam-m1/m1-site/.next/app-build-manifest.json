@@ -11,10 +11,16 @@
       "static/chunks/main-app.js",
       "static/chunks/app/layout.js"
     ],
-    "/_not-found/page": [
+    "/books/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/_not-found/page.js"
+      "static/css/app/books/page.css",
+      "static/chunks/app/books/page.js"
+    ],
+    "/auteurs/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/auteurs/page.js"
     ]
   }
 }
