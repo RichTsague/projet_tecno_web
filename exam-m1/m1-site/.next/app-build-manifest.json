@@ -3,7 +3,8 @@
     "/books/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/books/page.js"
+      "static/chunks/app/books/page.js",
+      "static/css/app/books/page.css"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -16,6 +17,18 @@
       "static/chunks/main-app.js",
       "static/css/app/page.css",
       "static/chunks/app/page.js"
+    ],
+    "/dashboard/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/dashboard/page.css",
+      "static/chunks/app/dashboard/page.js"
+    ],
+    "/authors/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/authors/page.css",
+      "static/chunks/app/authors/page.js"
     ],
     "/_not-found/page": [
       "static/chunks/webpack.js",
