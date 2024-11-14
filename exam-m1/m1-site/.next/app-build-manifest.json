@@ -26,6 +26,11 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/authors/page.js"
+    ],
+    "/authors/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/authors/[id]/page.js"
     ]
   }
 }

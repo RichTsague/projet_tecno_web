@@ -75,7 +75,7 @@ export default function Authors() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium">URL de la photo</label>
+            <label className="block text-sm font-medium">Photo de l'auteur</label>
             <input
               type="text"
               name="photo"

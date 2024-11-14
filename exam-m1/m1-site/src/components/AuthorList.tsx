@@ -1,4 +1,4 @@
-'use client';
+import Link from 'next/link';
 
 interface Author {
   id: number;
@@ -26,7 +26,11 @@ export default function AuthorList({ authors }: AuthorListProps) {
             className="w-16 h-16 rounded-full object-cover"
           />
           <div>
-            <h2 className="text-lg font-bold">{author.name}</h2>
+            <h2 className="text-lg font-bold">
+              <Link href={`/authors/${author.id}`}>
+                {author.name}
+              </Link>
+            </h2>
             <p>{author.booksCount} livres écrits</p>
             <p>Note moyenne : {author.averageRating.toFixed(1)} / 5</p>
           </div>

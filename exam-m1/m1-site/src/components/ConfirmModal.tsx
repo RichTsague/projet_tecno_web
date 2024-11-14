@@ -30,7 +30,7 @@ export default function ConfirmModal({
             onClick={onConfirm}
             className="bg-red-500 text-white py-2 px-4 rounded"
           >
-            Confirmer
+            Supprimer
           </button>
         </div>
       </div>
