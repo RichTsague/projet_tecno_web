@@ -13,36 +13,40 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 var _a, _b;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.AuthorController = void 0;
 const common_1 = require("@nestjs/common");
-const app_service_1 = require("./app.service");
-let AppController = class AppController {
-    constructor(appService) {
-        this.appService = appService;
+const author_service_1 = require("./author.service");
+const author_dto_1 = require("./author.dto");
+const author_presenter_1 = require("./author.presenter");
+let AuthorController = class AuthorController {
+    constructor(authorService) {
+        this.authorService = authorService;
     }
-    async greetMe(name) {
-        return `Hello ${name}`;
+    async listAuthors() {
+        const authors = await this.authorService.listAuthors();
+        return authors.map(author_presenter_1.AuthorPresenter.from);
     }
-    async getHello() {
-        return this.appService.getHello();
+    async createAuthor(input) {
+        const author = await this.authorService.createAuthor(input);
+        return author_presenter_1.AuthorPresenter.from(author);
     }
 };
-exports.AppController = AppController;
+exports.AuthorController = AuthorController;
 __decorate([
-    (0, common_1.Get)('greet/:name'),
-    __param(0, (0, common_1.Param)('name')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
-], AppController.prototype, "greetMe", null);
-__decorate([
-    (0, common_1.Get)('hello'),
+    (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
+    __metadata("design:returntype", typeof (_a = typeof Promise !== "undefined" && Promise) === "function" ? _a : Object)
+], AuthorController.prototype, "listAuthors", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [author_dto_1.CreateAuthorDto]),
     __metadata("design:returntype", typeof (_b = typeof Promise !== "undefined" && Promise) === "function" ? _b : Object)
-], AppController.prototype, "getHello", null);
-exports.AppController = AppController = __decorate([
-    (0, common_1.Controller)(''),
-    __metadata("design:paramtypes", [app_service_1.AppService])
-], AppController);
-//# sourceMappingURL=app.controller.js.map
+], AuthorController.prototype, "createAuthor", null);
+exports.AuthorController = AuthorController = __decorate([
+    (0, common_1.Controller)('/authors'),
+    __metadata("design:paramtypes", [author_service_1.AuthorService])
+], AuthorController);
+//# sourceMappingURL=author.controller.js.map
