@@ -1,17 +1,31 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import ConfirmModal from '../../../components/ConfirmModal';
+import ReviewForm from '../../../components/ReviewForm';
 
 export default function BookDetails({ params }: { params: { id: string } }) {
-  const router = useRouter();
-  const [books, setBooks] = useState([
-    { id: 1, title: 'Les Misérables', author: 'Victor Hugo', year: 1862 },
-    { id: 2, title: 'L’Étranger', author: 'Albert Camus', year: 1942 },
-    { id: 3, title: 'Le Père Goriot', author: 'Honoré de Balzac', year: 1835 },
+  const [books] = useState([
+    {
+      id: 1,
+      title: 'Les Misérables',
+      author: 'Victor Hugo',
+      year: 1862,
+      reviews: [
+        { rating: 5, comment: 'Un chef-d’œuvre intemporel.' },
+        { rating: 4, comment: 'Un peu long, mais magnifique.' },
+      ],
+    },
+    {
+      id: 2,
+      title: 'L’Étranger',
+      author: 'Albert Camus',
+      year: 1942,
+      reviews: [{ rating: 5, comment: 'Un roman fascinant.' }],
+    },
   ]);
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [reviews, setReviews] = useState(
+    books.find((b) => b.id === parseInt(params.id))?.reviews || []
+  );
 
   const book = books.find((b) => b.id === parseInt(params.id));
 
@@ -19,11 +33,14 @@ export default function BookDetails({ params }: { params: { id: string } }) {
     return <div>Livre non trouvé.</div>;
   }
 
-  const handleDelete = () => {
-    const updatedBooks = books.filter((b) => b.id !== book.id);
-    setBooks(updatedBooks);
-    router.push('/books');
+  const handleAddReview = (review: { rating: number; comment: string }) => {
+    setReviews([...reviews, review]);
   };
+
+  const averageRating =
+    reviews.length > 0
+      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
+      : 'Aucune note';
 
   return (
     <div className="p-6">
@@ -36,30 +53,23 @@ export default function BookDetails({ params }: { params: { id: string } }) {
         <strong>Année : </strong>
         {book.year}
       </p>
-
-      {/* Conteneur pour les boutons */}
-      <div className="mt-6 flex flex-col space-y-4">
-        <button
-          onClick={() => setModalOpen(true)}
-          className="bg-red-500 text-white py-2 px-4 rounded"
-        >
-          Supprimer ce livre
-        </button>
-        <a
-          href="/books"
-          className="bg-blue-500 text-white py-2 px-4 rounded text-center"
-        >
-          Retour à la liste des livres
-        </a>
-      </div>
-
-      {/* Modale de confirmation */}
-      <ConfirmModal
-        isOpen={isModalOpen}
-        onClose={() => setModalOpen(false)}
-        onConfirm={handleDelete}
-        message="Êtes-vous sûr de vouloir supprimer ce livre ?"
-      />
+      <p>
+        <strong>Note moyenne : </strong>
+        {averageRating}
+      </p>
+      <h2 className="mt-6 text-2xl font-bold">Avis</h2>
+      <ul className="mt-4 space-y-4">
+        {reviews.map((review, index) => (
+          <li key={index} className="p-4 border border-gray-300 rounded">
+            <p>
+              <strong>Note : </strong> {review.rating} / 5
+            </p>
+            <p>{review.comment}</p>
+          </li>
+        ))}
+      </ul>
+      <h3 className="mt-6 text-xl font-bold">Ajouter un avis</h3>
+      <ReviewForm onSubmit={handleAddReview} />
     </div>
   );
 }
