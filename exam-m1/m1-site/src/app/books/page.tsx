@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
  
 interface Author {
+  id: string;
   firstName: string;
   lastName: string;
 }
@@ -10,15 +11,17 @@ interface Author {
 interface Book {
   id: number;
   title: string;
+  yearPublished: number;
   author: Author;
 }
  
 function BooksPage() {
   const [books, setBooks] = useState<Book[]>([]);
-  const [showAddBookPopup, setShowAddBookPopup] = useState(false); // état pour la pop-up
+  const [authors, setAuthors] = useState<Author[]>([]);
+  const [showAddBookPopup, setShowAddBookPopup] = useState(false);
   const [newBookTitle, setNewBookTitle] = useState('');
-  const [newAuthorFirstName, setNewAuthorFirstName] = useState('');
-  const [newAuthorLastName, setNewAuthorLastName] = useState('');
+  const [newBookYear, setNewBookYear] = useState<number | ''>('');
+  const [newAuthorId, setNewAuthorId] = useState<string>('');
  
   useEffect(() => {
     const fetchBooks = async () => {
@@ -30,7 +33,17 @@ function BooksPage() {
       }
     };
  
+    const fetchAuthors = async () => {
+      try {
+        const response = await api.get('/authors');
+        setAuthors(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des auteurs:', error);
+      }
+    };
+ 
     fetchBooks();
+    fetchAuthors();
   }, []);
  
   const handleDelete = async (id: number) => {
@@ -47,31 +60,29 @@ function BooksPage() {
     try {
       const newBook = {
         title: newBookTitle,
-        author: {
-          firstName: newAuthorFirstName,
-          lastName: newAuthorLastName,
-        },
+        yearPublished: newBookYear,
+        authorId: newAuthorId,
       };
       const response = await api.post('/books', { book: newBook });
       setBooks([...books, response.data]);
-      setShowAddBookPopup(false); // Ferme la pop-up après l'ajout
+      setShowAddBookPopup(false);
       setNewBookTitle('');
-      setNewAuthorFirstName('');
-      setNewAuthorLastName('');
+      setNewBookYear('');
+      setNewAuthorId('');
       alert('Livre ajouté avec succès!');
     } catch (error) {
-      console.error('Erreur lors de l\'ajout du livre:', error);
+      console.error("Erreur lors de l'ajout du livre:", error);
     }
   };
  
   return (
 <div>
 <h1>Liste des Livres</h1>
-<button onClick={() => setShowAddBookPopup(true)}>Ajouter un Livre</button> {/* Bouton pour ouvrir la pop-up */}
+<button onClick={() => setShowAddBookPopup(true)}>Ajouter un Livre</button>
 <ul>
         {books.map((book) => (
 <li key={book.id}>
-            {book.title} par {book.author.firstName} {book.author.lastName}
+            {book.title} ({book.yearPublished}) par {book.author.firstName} {book.author.lastName}
 <button onClick={() => handleDelete(book.id)}>Supprimer</button>
 </li>
         ))}
@@ -91,20 +102,26 @@ function BooksPage() {
               />
 </label>
 <label>
-              Prénom de l'Auteur:
+              Année de publication:
 <input
-                type="text"
-                value={newAuthorFirstName}
-                onChange={(e) => setNewAuthorFirstName(e.target.value)}
+                type="number"
+                value={newBookYear}
+                onChange={(e) => setNewBookYear(Number(e.target.value))}
               />
 </label>
 <label>
-              Nom de l'Auteur:
-<input
-                type="text"
-                value={newAuthorLastName}
-                onChange={(e) => setNewAuthorLastName(e.target.value)}
-              />
+              Auteur:
+<select
+                value={newAuthorId}
+                onChange={(e) => setNewAuthorId(e.target.value)}
+>
+<option value="">Sélectionner un auteur</option>
+                {authors.map((author) => (
+<option key={author.id} value={author.id}>
+                    {author.firstName} {author.lastName}
+</option>
+                ))}
+</select>
 </label>
 <button onClick={handleAddBook}>Ajouter</button>
 <button onClick={() => setShowAddBookPopup(false)}>Annuler</button>
@@ -117,7 +134,6 @@ function BooksPage() {
  
 export default BooksPage;
  
-// Styles pour la pop-up
 const popupStyles = {
   overlay: {
     position: 'fixed' as 'fixed',
