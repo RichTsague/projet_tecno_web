@@ -1,12 +1,12 @@
 'use client';
 
+import styles from './BooksPage.module.css'; // Import du CSS
 import { useState } from 'react';
 import BookList from '../../components/BookList';
 import SearchBar from '../../components/SearchBar';
 import SortDropdown from '../../components/SortDropdown';
 import Modal from '../../components/Modal';
 import CreateBookForm from '../../components/CreateBookForm';
-
 
 export default function Books() {
   const [books, setBooks] = useState([
@@ -32,20 +32,28 @@ export default function Books() {
     });
 
   return (
-    <div>
-        
-      <h1 className="text-3xl font-bold mb-4">Liste des Livres</h1>
-      <button
-        className="mb-4 bg-green-500 text-white p-2 rounded"
-        onClick={() => setModalOpen(true)}
-      >
-        Ajouter un Livre
-      </button>
-      <SearchBar onSearch={setQuery} />
-      <SortDropdown onSort={setSort} />
-      <BookList books={filteredBooks} />
+    <div className={styles.container}>
+      <h1 className={styles.title}>Liste des Livres</h1>
+      <div className={styles.toolbar}>
+        <button
+          className={styles.addButton}
+          onClick={() => setModalOpen(true)}
+        >
+          Ajouter un Livre
+        </button>
+        <div className={styles.searchBar}>
+          <SearchBar onSearch={setQuery} />
+        </div>
+        <SortDropdown className={styles.sortDropdown} onSort={setSort} />
+      </div>
+      <div className={styles.bookList}>
+        <BookList books={filteredBooks} />
+      </div>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
-        <CreateBookForm onSubmit={addBook} />
+        <div>
+          <h2>Ajouter un Nouveau Livre</h2>
+          <CreateBookForm onSubmit={addBook} />
+        </div>
       </Modal>
     </div>
   );

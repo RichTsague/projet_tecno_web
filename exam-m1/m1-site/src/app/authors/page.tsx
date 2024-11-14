@@ -1,7 +1,8 @@
 'use client';
 
+import styles from './AuthorsPage.module.css'; // Import du fichier CSS
+import Link from 'next/link'; // Import du composant Link
 import { useState } from 'react';
-import AuthorList from '../../components/AuthorList';
 import Modal from '../../components/Modal';
 
 export default function Authors() {
@@ -9,21 +10,21 @@ export default function Authors() {
     {
       id: 1,
       name: 'Victor Hugo',
-      photo: 'https://via.placeholder.com/100',
+      photo: 'https://via.placeholder.com/120',
       booksCount: 5,
       averageRating: 4.8,
     },
     {
       id: 2,
       name: 'Albert Camus',
-      photo: 'https://via.placeholder.com/100',
+      photo: 'https://via.placeholder.com/120',
       booksCount: 3,
       averageRating: 4.5,
     },
     {
       id: 3,
       name: 'Honoré de Balzac',
-      photo: 'https://via.placeholder.com/100',
+      photo: 'https://via.placeholder.com/120',
       booksCount: 7,
       averageRating: 4.6,
     },
@@ -41,15 +42,34 @@ export default function Authors() {
   };
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-4">Liste des Auteurs</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Liste des Auteurs</h1>
       <button
         onClick={() => setModalOpen(true)}
-        className="mb-4 bg-green-500 text-white p-2 rounded"
+        className={styles.addButton}
       >
         Ajouter un Auteur
       </button>
-      <AuthorList authors={authors} />
+      <div className={styles.authorList}>
+        {authors.map((author) => (
+          <div key={author.id} className={styles.authorCard}>
+            <img
+              src={author.photo}
+              alt={author.name}
+              className={styles.authorPhoto}
+            />
+            <Link href={`/authors/${author.id}`} className={styles.authorName}>
+              {author.name}
+            </Link>
+            <p className={styles.authorInfo}>
+              Livres publiés : {author.booksCount}
+            </p>
+            <p className={styles.authorInfo}>
+              Note moyenne : {author.averageRating}
+            </p>
+          </div>
+        ))}
+      </div>
       <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
         <form
           onSubmit={(e) => {
@@ -63,49 +83,37 @@ export default function Authors() {
             };
             addAuthor(newAuthor);
           }}
-          className="space-y-4"
+          className={styles.modalContent}
         >
-          <div>
-            <label className="block text-sm font-medium">Nom</label>
-            <input
-              type="text"
-              name="name"
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
+          <h2 className={styles.modalTitle}>Ajouter un Auteur</h2>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Nom</label>
+            <input type="text" name="name" className={styles.input} required />
           </div>
-          <div>
-            <label className="block text-sm font-medium">Photo de l'auteur</label>
-            <input
-              type="text"
-              name="photo"
-              className="w-full p-2 border border-gray-300 rounded"
-              required
-            />
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Photo de l'auteur</label>
+            <input type="text" name="photo" className={styles.input} required />
           </div>
-          <div>
-            <label className="block text-sm font-medium">Nombre de livres</label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Nombre de livres</label>
             <input
               type="number"
               name="booksCount"
-              className="w-full p-2 border border-gray-300 rounded"
+              className={styles.input}
               required
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium">Note moyenne</label>
+          <div className={styles.formGroup}>
+            <label className={styles.label}>Note moyenne</label>
             <input
               type="number"
               step="0.1"
               name="averageRating"
-              className="w-full p-2 border border-gray-300 rounded"
+              className={styles.input}
               required
             />
           </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-500 text-white p-2 rounded"
-          >
+          <button type="submit" className={styles.submitButton}>
             Ajouter
           </button>
         </form>

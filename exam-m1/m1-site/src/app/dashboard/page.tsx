@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import styles from './DashboardPage.module.css'; // Import du fichier CSS
 
 export default function Dashboard() {
   const [books] = useState([
@@ -28,39 +29,39 @@ export default function Dashboard() {
     .slice(0, 3);
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold mb-6">Tableau de Bord</h1>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Tableau de Bord</h1>
 
       {/* Statistiques principales */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="p-4 border border-gray-300 rounded text-center">
-          <h2 className="text-xl font-bold">Livres</h2>
-          <p className="text-2xl font-bold">{totalBooks}</p>
-          <Link href="/books" className="text-blue-500 hover:underline">
+      <div className={styles.statsGrid}>
+        <div className={styles.statsCard}>
+          <h2 className={styles.statsTitle}>Livres</h2>
+          <p className={styles.statsValue}>{totalBooks}</p>
+          <Link href="/books" className={styles.statsLink}>
             Voir tous les livres
           </Link>
         </div>
-        <div className="p-4 border border-gray-300 rounded text-center">
-          <h2 className="text-xl font-bold">Auteurs</h2>
-          <p className="text-2xl font-bold">{totalAuthors}</p>
-          <Link href="/authors" className="text-blue-500 hover:underline">
+        <div className={styles.statsCard}>
+          <h2 className={styles.statsTitle}>Auteurs</h2>
+          <p className={styles.statsValue}>{totalAuthors}</p>
+          <Link href="/authors" className={styles.statsLink}>
             Voir tous les auteurs
           </Link>
         </div>
-        <div className="p-4 border border-gray-300 rounded text-center">
-          <h2 className="text-xl font-bold">Note Moyenne</h2>
-          <p className="text-2xl font-bold">{averageRating} / 5</p>
+        <div className={styles.statsCard}>
+          <h2 className={styles.statsTitle}>Note Moyenne</h2>
+          <p className={styles.statsValue}>{averageRating} / 5</p>
         </div>
       </div>
 
       {/* Top 3 des livres */}
-      <h2 className="text-2xl font-bold mb-4">Top 3 des Livres</h2>
-      <ul className="space-y-4">
+      <h2 className={styles.topBooksTitle}>Top 3 des Livres</h2>
+      <ul className={styles.bookList}>
         {topBooks.map((book) => (
-          <li key={book.id} className="p-4 border border-gray-300 rounded">
-            <h3 className="text-lg font-bold">{book.title}</h3>
-            <p>Auteur : {book.author}</p>
-            <p>Note : {book.rating} / 5</p>
+          <li key={book.id} className={styles.bookItem}>
+            <h3 className={styles.bookTitle}>{book.title}</h3>
+            <p className={styles.bookInfo}>Auteur : {book.author}</p>
+            <p className={styles.bookInfo}>Note : {book.rating} / 5</p>
           </li>
         ))}
       </ul>
