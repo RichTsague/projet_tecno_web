@@ -8,7 +8,7 @@ export declare class BookRepository {
     constructor(dataSource: DataSource);
     listBooks(): Promise<BookModel[]>;
     getBookById(id: BookId): Promise<BookModel | undefined>;
-    updateBook(id: BookId, input: UpdateBookModel): any;
+    updateBook(id: BookId, input: UpdateBookModel): Promise<void>;
     createBook(input: CreateBookModel): Promise<BookModel>;
-    deleteBook(id: BookId): any;
+    deleteBook(id: BookId): Promise<void>;
 }

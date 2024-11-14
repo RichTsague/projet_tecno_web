@@ -6,7 +6,7 @@ export declare class BookService {
     constructor(bookRepository: BookRepository);
     listBooks(): Promise<BookModel[]>;
     getBookById(id: BookId): Promise<BookModel | undefined>;
-    updateBook(id: BookId, input: UpdateBookModel): unknown;
+    updateBook(id: BookId, input: UpdateBookModel): Promise<void>;
     createBook(input: CreateBookModel): Promise<BookModel>;
-    deleteBook(id: BookId): unknown;
+    deleteBook(id: BookId): Promise<void>;
 }

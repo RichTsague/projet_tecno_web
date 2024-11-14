@@ -1,0 +1,12 @@
+{
+    "name": "exam-m1",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
+        "start:backend": "cd m1-api && npm run start:dev",
+        "start:frontend": "cd m1-site && npm run dev"
+    },
+    "devDependencies": {
+        "concurrently": "^9.1.0"
+    }
+}
