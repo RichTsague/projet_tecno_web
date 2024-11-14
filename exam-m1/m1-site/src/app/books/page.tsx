@@ -1,4 +1,5 @@
 'use client';
+<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import api from '../services/api';
  
@@ -54,6 +55,29 @@ function BooksPage() {
     } catch (error) {
       console.error('Erreur lors de la suppression du livre:', error);
     }
+=======
+
+import styles from './BooksPage.module.css'; // Import du CSS
+import { useState } from 'react';
+import BookList from '../../components/BookList';
+import SearchBar from '../../components/SearchBar';
+import SortDropdown from '../../components/SortDropdown';
+import Modal from '../../components/Modal';
+import CreateBookForm from '../../components/CreateBookForm';
+
+export default function Books() {
+  const [books, setBooks] = useState([
+    { id: 1, title: 'Les Misérables', author: 'Victor Hugo', year: 1862 },
+    { id: 2, title: 'L’Étranger', author: 'Albert Camus', year: 1942 },
+  ]);
+  const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('');
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const addBook = (book: { title: string; author: string; year: number }) => {
+    setBooks([...books, { id: books.length + 1, ...book }]);
+    setModalOpen(false);
+>>>>>>> Livres
   };
  
   const handleAddBook = async () => {
@@ -76,6 +100,7 @@ function BooksPage() {
   };
  
   return (
+<<<<<<< HEAD
 <div>
 <h1>Liste des Livres</h1>
 <button onClick={() => setShowAddBookPopup(true)}>Ajouter un Livre</button>
@@ -129,6 +154,32 @@ function BooksPage() {
 </div>
       )}
 </div>
+=======
+    <div className={styles.container}>
+      <h1 className={styles.title}>Liste des Livres</h1>
+      <div className={styles.toolbar}>
+        <button
+          className={styles.addButton}
+          onClick={() => setModalOpen(true)}
+        >
+          Ajouter un Livre
+        </button>
+        <div className={styles.searchBar}>
+          <SearchBar onSearch={setQuery} />
+        </div>
+        <SortDropdown className={styles.sortDropdown} onSort={setSort} />
+      </div>
+      <div className={styles.bookList}>
+        <BookList books={filteredBooks} />
+      </div>
+      <Modal isOpen={isModalOpen} onClose={() => setModalOpen(false)}>
+        <div>
+          <h2>Ajouter un Nouveau Livre</h2>
+          <CreateBookForm onSubmit={addBook} />
+        </div>
+      </Modal>
+    </div>
+>>>>>>> Livres
   );
 }
  

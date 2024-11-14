@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 // File: C:\Users\Rich Tsague\Documents\GitHub\projet_tecno_web\exam-m1\m1-site\src\app\authors\page.tsx
+=======
+// File: C:\Users\PAVILION\Documents\GitHub\projet_tecno_web\exam-m1\m1-site\src\app\authors\page.tsx
+>>>>>>> Livres
 import * as entry from '../../../../src/app/authors/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
