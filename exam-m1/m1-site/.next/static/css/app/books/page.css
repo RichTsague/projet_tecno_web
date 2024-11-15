@@ -1,0 +1,108 @@
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/app/books/BooksPage.module.css ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+/* Conteneur principal */
+.BooksPage_container__Q6VF0 {
+  background-color: #f9fafb; /* Fond doux */
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Titre principal */
+.BooksPage_title__05h4Z {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* Barre d'outils */
+.BooksPage_toolbar__bS8hW {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Bouton Ajouter un Livre */
+.BooksPage_addButton__HNH_l {
+  background-color: #48bb78;
+  color: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.BooksPage_addButton__HNH_l:hover {
+  background-color: #38a169;
+  transform: scale(1.05);
+}
+
+.BooksPage_addButton__HNH_l:active {
+  background-color: #2f855a;
+}
+
+/* Barre de recherche */
+.BooksPage_searchBar__mfh5u {
+  flex-grow: 1;
+  max-width: 60%;
+}
+
+.BooksPage_searchBar__mfh5u input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+/* Liste des livres */
+.BooksPage_bookList__Kut2v {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Centre horizontalement */
+  gap: 1.5rem; /* Espacement entre les cartes */
+  margin-top: 2rem;
+}
+
+/* Carte d'un livre */
+.BooksPage_bookItem__7bZZz {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 250px; /* Largeur fixe des cartes */
+  transition: transform 0.2s ease;
+  text-align: center; /* Centrer le texte */
+}
+
+.BooksPage_bookItem__7bZZz:hover {
+  transform: translateY(-5px); /* Légère élévation au survol */
+}
+
+/* Texte des livres */
+.BooksPage_bookTitle__pdX_M {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.BooksPage_bookAuthor__jxsZU {
+  color: #4a5568;
+  margin-top: 0.5rem;
+}
+
+.BooksPage_bookYear__tUNxR {
+  color: #a0aec0;
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+}
+
