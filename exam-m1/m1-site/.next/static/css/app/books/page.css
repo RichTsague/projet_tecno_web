@@ -1,108 +1,97 @@
 /*!******************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./src/app/books/BooksPage.module.css ***!
   \******************************************************************************************************************************************************************************************************************************************************************************/
-/* Conteneur principal */
-.BooksPage_container__Q6VF0 {
-  background-color: #f9fafb; /* Fond doux */
-  min-height: 100vh;
-  padding: 2rem;
-  font-family: 'Arial', sans-serif;
-}
-
-/* Titre principal */
-.BooksPage_title__05h4Z {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2d3748;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-/* Barre d'outils */
-.BooksPage_toolbar__bS8hW {
+.BooksPage_booksContainer__W097Z {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 2rem;
-  gap: 1rem;
-  flex-wrap: wrap;
+  padding: 20px;
 }
 
-/* Bouton Ajouter un Livre */
+.BooksPage_searchInput__Ed9QC {
+  padding: 8px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
 .BooksPage_addButton__HNH_l {
-  background-color: #48bb78;
+  background-color: #0070f3;
   color: white;
-  padding: 0.5rem 1rem;
+  padding: 10px 15px;
   border: none;
   border-radius: 5px;
-  font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  margin-bottom: 20px;
 }
 
 .BooksPage_addButton__HNH_l:hover {
-  background-color: #38a169;
-  transform: scale(1.05);
+  background-color: #005bb5;
 }
 
-.BooksPage_addButton__HNH_l:active {
-  background-color: #2f855a;
-}
-
-/* Barre de recherche */
-.BooksPage_searchBar__mfh5u {
-  flex-grow: 1;
-  max-width: 60%;
-}
-
-.BooksPage_searchBar__mfh5u input {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #cbd5e0;
-  border-radius: 5px;
-  font-size: 1rem;
-}
-
-/* Liste des livres */
-.BooksPage_bookList__Kut2v {
+.BooksPage_booksBoxes__LP49q {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; /* Centre horizontalement */
-  gap: 1.5rem; /* Espacement entre les cartes */
-  margin-top: 2rem;
+  gap: 20px;
+  justify-content: flex-end;
+  direction: rtl;  /* Aligner de droite à gauche */
 }
 
-/* Carte d'un livre */
-.BooksPage_bookItem__7bZZz {
-  background-color: white;
+.BooksPage_bookBox__xZ0Ym {
+  background-color: #f4f4f4;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding: 1rem;
-  width: 250px; /* Largeur fixe des cartes */
-  transition: transform 0.2s ease;
-  text-align: center; /* Centrer le texte */
+  width: 250px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.BooksPage_bookItem__7bZZz:hover {
-  transform: translateY(-5px); /* Légère élévation au survol */
+.BooksPage_bookImage__g7Vjt {
+  width: 100%;
+  height: 150px;
+  margin-bottom: 10px;
 }
 
-/* Texte des livres */
+.BooksPage_bookImg__USvwa {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
 .BooksPage_bookTitle__pdX_M {
-  font-size: 1.25rem;
   font-weight: bold;
-  color: #2d3748;
-  margin-bottom: 0.5rem;
+  color: #333;  /* Utilisation d'une couleur de texte normale */
+  text-decoration: none;  /* Pas de soulignement */
+  display: block;
+  margin-bottom: 5px;
+  text-align: center;  /* Centrer le texte horizontalement */
+  width: 100%;  /* S'assurer que l'élément prend toute la largeur disponible */
 }
+
 
 .BooksPage_bookAuthor__jxsZU {
-  color: #4a5568;
-  margin-top: 0.5rem;
+  font-weight: bold;
+  color: #555;  /* Utilisation d'une couleur de texte normale */
+  text-decoration: none;  /* Pas de soulignement */
+  display: block;
+  margin-bottom: 5px;
+  text-align: center;  /* Centrer le texte horizontalement */
+  width: 100%;  /* S'assurer que l'élément prend toute la largeur disponible */
 }
 
-.BooksPage_bookYear__tUNxR {
-  color: #a0aec0;
-  margin-top: 0.25rem;
-  font-size: 0.9rem;
+.BooksPage_deleteButton__j5UJN {
+  background-color: #e74c3c;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.BooksPage_deleteButton__j5UJN:hover {
+  background-color: #c0392b;
 }
 
