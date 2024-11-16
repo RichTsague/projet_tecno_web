@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateAuthorDto = void 0;
+exports.UpdateAuthorDto = exports.CreateAuthorDto = void 0;
 const class_validator_1 = require("class-validator");
 class CreateAuthorDto {
 }
@@ -22,4 +22,17 @@ __decorate([
     (0, class_validator_1.IsString)(),
     __metadata("design:type", String)
 ], CreateAuthorDto.prototype, "lastName", void 0);
+class UpdateAuthorDto {
+}
+exports.UpdateAuthorDto = UpdateAuthorDto;
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateAuthorDto.prototype, "firstName", void 0);
+__decorate([
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], UpdateAuthorDto.prototype, "lastName", void 0);
 //# sourceMappingURL=author.dto.js.map

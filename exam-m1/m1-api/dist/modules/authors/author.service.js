@@ -22,6 +22,19 @@ let AuthorService = class AuthorService {
     async createAuthor(input) {
         return this.authorRepository.createAuthor(input);
     }
+    async getAuthorById(authorId) {
+        const author = await this.authorRepository.findById(authorId);
+        if (!author) {
+            throw new common_1.NotFoundException(`Auteur avec ID ${authorId} non trouvé`);
+        }
+        return author;
+    }
+    async updateAuthor(authorId, input) {
+        return this.authorRepository.updateAuthor(authorId, input);
+    }
+    async deleteAuthor(authorId) {
+        await this.authorRepository.deleteAuthor(authorId);
+    }
 };
 exports.AuthorService = AuthorService;
 exports.AuthorService = AuthorService = __decorate([
