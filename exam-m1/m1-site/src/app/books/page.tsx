@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import api from '../services/api';
 import AddBookPopup from '../../components/AddBookPopup';
-
+import styles from './BooksPage.module.css';  // Import du fichier CSS module
 
 interface Author {
   id: string;
@@ -16,6 +16,7 @@ interface Book {
   title: string;
   yearPublished: number;
   author: Author;
+  imageUrl?: string;  // Ajoutez une propriété imageUrl pour l'image du livre
 }
 
 function BooksPage() {
@@ -69,7 +70,6 @@ function BooksPage() {
     }
   };
 
-  // Filtrer les livres en fonction de la recherche
   const filteredBooks = books.filter(
     (book) =>
       book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -77,29 +77,49 @@ function BooksPage() {
   );
 
   return (
-    <div>
+    <div className={styles.booksContainer}>
       <h1>Liste des Livres</h1>
-      <input
-        type="text"
-        placeholder="Rechercher un livre ou un auteur"
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        style={{ padding: '8px', marginBottom: '20px', width: '100%' }}
-      />
-      <button onClick={() => setShowAddBookPopup(true)}>Ajouter un Livre</button>
-      <ul>
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Rechercher un livre ou un auteur"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className={styles.searchInput}
+        />
+        <button className={styles.addButton} onClick={() => setShowAddBookPopup(true)}>
+          Ajouter un Livre
+        </button>
+      </div>
+      
+      <div className={styles.booksBoxes}>
         {filteredBooks.map((book) => (
-          <li key={book.id}>
-            <Link href={`/books/${book.id}`} passHref>
-              <span style={{ fontWeight: 'bold', color: '#0070f3', textDecoration: 'underline' }}>
-                {book.title} ({book.yearPublished})
+          <div className={styles.bookBox} key={book.id}>
+            <div className={styles.bookImage}>
+              <img 
+                src="/images/livre.jpeg"  // Image par défaut pour tous les livres
+                alt={book.title} 
+                className={styles.bookImg}
+              />
+            </div>
+            <div className={styles.bookInfo}>
+              {/* Le lien est maintenant stylisé comme un texte normal */}
+              <Link href={`/books/${book.id}`} passHref>
+                <span className={styles.bookTitle}>
+                  {book.title}
+                </span>
+              </Link>
+              <span className={styles.bookTitle}>
+                  Publié en : {book.yearPublished}
               </span>
-            </Link>
-            {' '}par {book.author.firstName} {book.author.lastName}
-            <button onClick={() => handleDelete(book.id)}>Supprimer</button>
-          </li>
+              <span className={styles.bookAuthor}>
+                par {book.author.firstName} {book.author.lastName}
+              </span>
+            </div>
+            <button className={styles.deleteButton} onClick={() => handleDelete(book.id)}>Supprimer</button>
+          </div>
         ))}
-      </ul>
+      </div>
 
       {/* Affiche le pop-up pour ajouter un livre */}
       {showAddBookPopup && (

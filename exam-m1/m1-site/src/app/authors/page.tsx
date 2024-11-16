@@ -4,7 +4,6 @@ import styles from './AuthorsPage.module.css';
 import { useState, useEffect } from 'react';
 import Modal from '../../components/Modal';
 import api from '../services/api';
-import defaultAuthorPhoto from '../images/default-author.jpeg';
 
 interface Author {
   id: string;
@@ -31,7 +30,6 @@ export default function Authors() {
   const [authorToDelete, setAuthorToDelete] = useState<Author | null>(null); // Auteur à supprimer
   const [searchTerm, setSearchTerm] = useState(''); // État pour la barre de recherche
 
-  const DEFAULT_PHOTO_URL = defaultAuthorPhoto;
 
   useEffect(() => {
     const fetchAuthorsAndBooks = async () => {
@@ -106,7 +104,7 @@ export default function Authors() {
       <div className={styles.authorList}>
         {filteredAuthors.map((author) => (
           <div key={author.id} className={styles.authorCard} onClick={() => handleAuthorClick(author)}>
-            <img src={author.photo || DEFAULT_PHOTO_URL} alt={`${author.firstName} ${author.lastName}`} className={styles.authorPhoto} />
+            <img src="/images/image.jpg" alt={`${author.firstName} ${author.lastName}`} className={styles.authorPhoto} />
             <p className={styles.authorName}>{author.firstName} {author.lastName}</p>
             <p className={styles.authorInfo}>Livres publiés : {books.filter(book => book.author.id === author.id).length}</p>
           </div>
@@ -119,7 +117,7 @@ export default function Authors() {
           <div className={styles.modalContent}>
             <h2 className={styles.modalTitle}>Détails de l'Auteur</h2>
             <div className={styles.modalAuthorInfo}>
-              <img src={selectedAuthor.photo || DEFAULT_PHOTO_URL} alt={`${selectedAuthor.firstName} ${selectedAuthor.lastName}`} className={styles.modalAuthorPhoto} />
+              <img src="/images/image.jpg" alt={`${selectedAuthor.firstName} ${selectedAuthor.lastName}`} className={styles.modalAuthorPhoto} />
               <p><strong>Nom :</strong> {selectedAuthor.firstName} {selectedAuthor.lastName}</p>
               <p><strong>Livres publiés :</strong> {authorBooks.length}</p>
               <p><strong>Description :</strong> Cet auteur est connu pour ses œuvres inspirantes et ses contributions remarquables à la littérature. Une véritable source d'inspiration pour ses lecteurs.</p>

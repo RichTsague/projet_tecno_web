@@ -80,4 +80,117 @@
     text-align: center;
     margin-top: 2rem;
   }
+  .BookDetails_booksContainer__dYyVh {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .BookDetails_searchInput__glOSg {
+    padding: 8px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .BookDetails_addButton__CRKQI {
+    background-color: #0070f3;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+  
+  .BookDetails_addButton__CRKQI:hover {
+    background-color: #005bb5;
+  }
+  
+  .BookDetails_booksBoxes__kiyMU {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-end;
+    direction: rtl;  /* Aligner de droite à gauche */
+  }
+  
+  .BookDetails_bookBox__Cg_jz {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    width: 250px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .BookDetails_bookImage__Qt4Lv {
+    width: 100%;
+    height: 150px;
+    margin-bottom: 10px;
+  }
+  
+  .BookDetails_bookImg__a0IO4 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .BookDetails_bookTitle__5mQw4 {
+    font-weight: bold;
+    color: #0070f3;
+    text-decoration: none;  /* Retirer la décoration du lien */
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .BookDetails_bookAuthor__4SfAh {
+    color: #555;
+  }
+  
+  .BookDetails_deleteButton__Fj_8q {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .BookDetails_deleteButton__Fj_8q:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Masquer le lien de titre du livre */
+  .BookDetails_bookInfo__cxL__ a {
+    display: none;
+  }
+  .BookDetails_bookImage__Qt4Lv {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .BookDetails_bookImg__a0IO4 {
+    width: 300px;  /* Ajuster la taille de l'image */
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .BookDetails_text__ZQ3nJ {
+    margin-bottom: 15px;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #333;
+  }
+  
+  .BookDetails_buttonContainer__WZ6If {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
   
