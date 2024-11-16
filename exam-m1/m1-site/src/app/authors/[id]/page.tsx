@@ -1,85 +1,86 @@
 'use client';
 
-import styles from './AuthorDetails.module.css'; // Import du fichier CSS
-import { useState } from 'react';
-import ReviewForm from '../../../components/ReviewForm';
+import { useEffect, useState } from 'react';
+import styles from './AuthorDetails.module.css';
+import api from '../../services/api';
 
-export default function BookDetails({ params }: { params: { id: string } }) {
-  const [books] = useState([
-    {
-      id: 1,
-      title: 'Les Misérables',
-      author: 'Victor Hugo',
-      year: 1862,
-      reviews: [
-        { rating: 5, comment: 'Un chef-d’œuvre intemporel.' },
-        { rating: 4, comment: 'Un peu long, mais magnifique.' },
-      ],
-    },
-    {
-      id: 2,
-      title: 'L’Étranger',
-      author: 'Albert Camus',
-      year: 1942,
-      reviews: [{ rating: 5, comment: 'Un roman fascinant.' }],
-    },
-  ]);
+interface Author {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
 
-  const [reviews, setReviews] = useState(
-    books.find((b) => b.id === parseInt(params.id))?.reviews || []
-  );
+export default function AuthorDetails({ params }: { params: { id: string } }) {
+  const [author, setAuthor] = useState<Author | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      console.log('Fetching author with ID:', params.id); // Log de l'ID de l'auteur
+  
+      try {
+        const response = await api.get(`/authors/${params.id}`);
+        console.log('API response:', response); // Afficher la réponse pour débogage
+        if (response.data) {
+          setAuthor(response.data);
+        } else {
+          setError('Auteur non trouvé.');
+        }
+      } catch (error: any) {
+        console.error('Erreur lors de la récupération des détails de l\'auteur:', error);
+        if (error.response) {
+          setError(`Erreur: ${error.response.status} - ${error.response.data.message || error.response.statusText}`);
+        } else {
+          setError('Erreur de récupération.');
+        }
+      }
+    };
+  
+    fetchAuthor();
+  }, [params.id]);
 
-  const book = books.find((b) => b.id === parseInt(params.id));
-
-  if (!book) {
-    return <div className={styles.container}>Livre non trouvé.</div>;
-  }
-
-  const handleAddReview = (review: { rating: number; comment: string }) => {
-    setReviews([...reviews, review]);
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/authors/${params.id}`);
+      // Redirection manuelle après la suppression
+      window.location.href = '/authors';
+    } catch (error) {
+      console.error('Erreur lors de la suppression de l\'auteur:', error);
+    }
   };
 
-  const averageRating =
-    reviews.length > 0
-      ? (reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length).toFixed(1)
-      : 'Aucune note';
+  if (error) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.error}>{error}</p>
+        <a href="/authors" className={`${styles.button} ${styles.return}`}>
+          Retour à la liste des auteurs
+        </a>
+      </div>
+    );
+  }
+
+  if (!author) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.loading}>Chargement des détails de l'auteur...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
-      {/* Informations principales */}
-      <div className={styles.bookDetails}>
-        <h1 className={styles.bookTitle}>{book.title}</h1>
-        <p className={styles.bookInfo}>
-          <strong>Auteur : </strong> {book.author}
-        </p>
-        <p className={styles.bookInfo}>
-          <strong>Année : </strong> {book.year}
-        </p>
-        <p className={styles.bookInfo}>
-          <strong>Note moyenne : </strong>
-          <span className={styles.bookRating}>{averageRating}</span>
-        </p>
-      </div>
+      <h1 className={styles.title}>{author.firstName} {author.lastName}</h1>
 
-      {/* Section des avis */}
-      <div className={styles.reviewSection}>
-        <h2 className={styles.reviewTitle}>Avis</h2>
-        <ul className={styles.reviewList}>
-          {reviews.map((review, index) => (
-            <li key={index} className={styles.reviewItem}>
-              <p className={styles.reviewRating}>
-                Note : <span>{review.rating} / 5</span>
-              </p>
-              <p className={styles.reviewComment}>{review.comment}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Formulaire pour ajouter un avis */}
-      <div className={styles.formSection}>
-        <h3 className={styles.formTitle}>Ajouter un Avis</h3>
-        <ReviewForm onSubmit={handleAddReview} />
+      <div className={styles.buttonContainer}>
+        <button
+          onClick={handleDelete}
+          className={`${styles.button} ${styles.delete}`}
+        >
+          Supprimer cet auteur
+        </button>
+        <a href="/authors" className={`${styles.button} ${styles.return}`}>
+          Retour à la liste des auteurs
+        </a>
       </div>
     </div>
   );

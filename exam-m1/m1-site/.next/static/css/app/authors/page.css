@@ -97,4 +97,326 @@
     color: #4a5568;
     font-size: 0.9rem;
   }
+  /* Conteneur principal */
+.AuthorsPage_container__2EXEN {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Titre de la page */
+.AuthorsPage_title__1G9dl {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+/* Bouton pour ajouter un auteur */
+.AuthorsPage_addButton__J6xC9 {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.AuthorsPage_addButton__J6xC9:hover {
+  background-color: #45a049;
+}
+
+/* Liste des auteurs */
+.AuthorsPage_authorList__YkZao {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Carte de chaque auteur */
+.AuthorsPage_authorCard__eKgla {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 8px;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+}
+
+.AuthorsPage_authorCard__eKgla:hover {
+  transform: scale(1.05);
+}
+
+.AuthorsPage_authorPhoto__juONo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.AuthorsPage_authorName__r3BmL {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.AuthorsPage_authorInfo__G0uOI {
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Styles pour la modale */
+.AuthorsPage_modal__4gtBU {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+
+.AuthorsPage_modal__4gtBU.AuthorsPage_open__alkEC {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+
+.AuthorsPage_modalContent___K8_5 {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.AuthorsPage_modalTitle__v1yax {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.AuthorsPage_closeButton__HLsaG {
+  background-color: #f44336;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.AuthorsPage_closeButton__HLsaG:hover {
+  background-color: #d32f2f;
+}
+
+/* Détails de l'auteur */
+.AuthorsPage_modalAuthorInfo__1fRYD {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.AuthorsPage_modalAuthorPhoto__sKgKq {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 15px;
+}
+
+.AuthorsPage_booksList__uR3oi {
+  list-style-type: none;
+  padding: 0;
+  font-size: 0.9rem;
+}
+
+.AuthorsPage_booksList__uR3oi li {
+  margin-bottom: 5px;
+}
+
+/* Formulaire d'ajout d'auteur */
+.AuthorsPage_formGroup__Chym8 {
+  margin-bottom: 15px;
+}
+
+.AuthorsPage_label__q2XgY {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.AuthorsPage_input__e04J1 {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.AuthorsPage_submitButton__p10J8 {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.AuthorsPage_submitButton__p10J8:hover {
+  background-color: #45a049;
+}
+
+.AuthorsPage_modalContent___K8_5 form {
+  display: flex;
+  flex-direction: column;
+}
+/* Container des boutons dans la modal */
+.AuthorsPage_confirmDeleteButtons__OT4iP {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+/* Bouton de suppression dans la modale */
+.AuthorsPage_deleteButton__th8SX {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.AuthorsPage_deleteButton__th8SX:hover {
+  background-color: #c0392b;
+}
+
+/* Boutons de confirmation de suppression */
+.AuthorsPage_confirmButton__GCstC {
+  background-color: #2ecc71;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.AuthorsPage_confirmButton__GCstC:hover {
+  background-color: #27ae60;
+}
+
+/* Bouton d'annulation de suppression */
+.AuthorsPage_cancelButton__Rig8w {
+  background-color: #95a5a6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.AuthorsPage_cancelButton__Rig8w:hover {
+  background-color: #7f8c8d;
+}
+
+/* Bouton d'ajout d'auteur */
+.AuthorsPage_submitButton__p10J8 {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.AuthorsPage_submitButton__p10J8:hover {
+  background-color: #2980b9;
+}
+
+/* Bouton de fermeture de la modale */
+.AuthorsPage_closeButton__HLsaG {
+  background-color: #34495e;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.AuthorsPage_closeButton__HLsaG:hover {
+  background-color: #2c3e50;
+}
+
+/* Bouton d'ajout d'auteur dans la liste */
+.AuthorsPage_addButton__J6xC9 {
+  background-color: #9b59b6;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.AuthorsPage_addButton__J6xC9:hover {
+  background-color: #8e44ad;
+}
+/* Lien vers les livres dans la modale */
+.AuthorsPage_bookLink__8RRU0 {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.AuthorsPage_bookLink__8RRU0:hover {
+  color: #2980b9;
+  text-decoration: underline;
+}
+.AuthorsPage_searchContainer__PqBtU {
+  margin-bottom: 20px;
+}
+
+.AuthorsPage_searchInput__kuygJ {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.AuthorsPage_searchInput__kuygJ:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
   
