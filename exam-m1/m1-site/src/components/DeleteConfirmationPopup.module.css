@@ -1,0 +1,44 @@
+.popupOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .popup {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 300px;
+  }
+  
+  .popupButtons {
+    margin-top: 20px;
+  }
+  
+  .confirmButton,
+  .cancelButton {
+    padding: 10px 20px;
+    margin: 0 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .confirmButton {
+    background-color: #d9534f;
+    color: white;
+  }
+  
+  .cancelButton {
+    background-color: #5bc0de;
+    color: white;
+  }
+  

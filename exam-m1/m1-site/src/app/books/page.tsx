@@ -1,9 +1,11 @@
 'use client';
+
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import api from '../services/api';
 import AddBookPopup from '../../components/AddBookPopup';
-import styles from './BooksPage.module.css';  // Import du fichier CSS module
+import DeleteConfirmationPopup from '../../components/DeleteConfirmationPopup';
+import styles from './BooksPage.module.css';
 
 interface Author {
   id: string;
@@ -16,25 +18,32 @@ interface Book {
   title: string;
   yearPublished: number;
   author: Author;
-  imageUrl?: string;  // Ajoutez une propriété imageUrl pour l'image du livre
+  imageUrl?: string;
 }
 
 function BooksPage() {
   const [books, setBooks] = useState<Book[]>([]);
   const [authors, setAuthors] = useState<Author[]>([]);
   const [showAddBookPopup, setShowAddBookPopup] = useState(false);
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [bookToDelete, setBookToDelete] = useState<number | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortBy, setSortBy] = useState<'title' | 'year' | 'author'>('title');
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
+  // Function to fetch books from the API
+  const fetchBooks = async () => {
+    try {
+      const response = await api.get('/books');
+      setBooks(response.data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des livres:', error);
+    }
+  };
+
+  // Fetch authors once
   useEffect(() => {
-    const fetchBooks = async () => {
-      try {
-        const response = await api.get('/books');
-        setBooks(response.data);
-      } catch (error) {
-        console.error('Erreur lors de la récupération des livres:', error);
-      }
-    };
-
+    fetchBooks();
     const fetchAuthors = async () => {
       try {
         const response = await api.get('/authors');
@@ -43,30 +52,23 @@ function BooksPage() {
         console.error('Erreur lors de la récupération des auteurs:', error);
       }
     };
-
-    fetchBooks();
     fetchAuthors();
   }, []);
 
-  const handleDelete = async (id: number) => {
-    try {
-      await api.delete(`/books/${id}`);
-      setBooks(books.filter((book) => book.id !== id));
-      alert('Livre supprimé avec succès!');
-    } catch (error) {
-      console.error('Erreur lors de la suppression du livre:', error);
-    }
+  const handleConfirmAddBook = () => {
+    setShowConfirmation(true);
+    setTimeout(() => setShowConfirmation(false), 3000); // Masquer après 3 secondes
   };
 
-  const handleAddBook = async (title: string, yearPublished: number, authorId: string) => {
-    try {
-      const newBook = { title, yearPublished, authorId };
-      const response = await api.post('/books', { book: newBook });
-      setBooks([...books, response.data]);
-      setShowAddBookPopup(false);
-      alert('Livre ajouté avec succès!');
-    } catch (error) {
-      console.error("Erreur lors de l'ajout du livre:", error);
+  const handleDelete = async () => {
+    if (bookToDelete) {
+      try {
+        await api.delete(`/books/${bookToDelete}`);
+        setBooks(books.filter((book) => book.id !== bookToDelete));
+        setShowDeletePopup(false);
+      } catch (error) {
+        console.error('Erreur lors de la suppression du livre:', error);
+      }
     }
   };
 
@@ -75,6 +77,23 @@ function BooksPage() {
       book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       `${book.author.firstName} ${book.author.lastName}`.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const sortBooks = (books: Book[]) => {
+    switch (sortBy) {
+      case 'title':
+        return books.sort((a, b) => a.title.localeCompare(b.title));
+      case 'year':
+        return books.sort((a, b) => a.yearPublished - b.yearPublished);
+      case 'author':
+        return books.sort((a, b) =>
+          `${a.author.firstName} ${a.author.lastName}`.localeCompare(`${b.author.firstName} ${b.author.lastName}`)
+        );
+      default:
+        return books;
+    }
+  };
+
+  const sortedBooks = sortBooks(filteredBooks);
 
   return (
     <div className={styles.booksContainer}>
@@ -90,43 +109,84 @@ function BooksPage() {
         <button className={styles.addButton} onClick={() => setShowAddBookPopup(true)}>
           Ajouter un Livre
         </button>
+              {/* Message de confirmation d'ajout */}
+      {showConfirmation && (
+        <p className={styles.confirmationMessage}>Livre ajouté avec succès !</p>
+      )}
+      </div>
+
+      <div className={styles.sortContainer}>
+        <label htmlFor="sortBy">Trier par :</label>
+        <select
+          id="sortBy"
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value as 'title' | 'year' | 'author')}
+          className={styles.sortSelect}
+        >
+          <option value="title">Titre</option>
+          <option value="year">Année de publication</option>
+          <option value="author">Auteur</option>
+        </select>
       </div>
       
       <div className={styles.booksBoxes}>
-        {filteredBooks.map((book) => (
+        {sortedBooks.map((book) => (
           <div className={styles.bookBox} key={book.id}>
             <div className={styles.bookImage}>
               <img 
-                src="/images/livre.jpeg"  // Image par défaut pour tous les livres
+                src="/images/livre.jpeg"
                 alt={book.title} 
                 className={styles.bookImg}
               />
             </div>
             <div className={styles.bookInfo}>
-              {/* Le lien est maintenant stylisé comme un texte normal */}
               <Link href={`/books/${book.id}`} passHref>
                 <span className={styles.bookTitle}>
                   {book.title}
                 </span>
               </Link>
               <span className={styles.bookTitle}>
-                  Publié en : {book.yearPublished}
+                Publié en : {book.yearPublished}
               </span>
               <span className={styles.bookAuthor}>
                 par {book.author.firstName} {book.author.lastName}
               </span>
             </div>
-            <button className={styles.deleteButton} onClick={() => handleDelete(book.id)}>Supprimer</button>
+            <button 
+              className={styles.deleteButton} 
+              onClick={() => { setBookToDelete(book.id); setShowDeletePopup(true); }}
+            >
+              Supprimer
+            </button>
           </div>
         ))}
       </div>
 
-      {/* Affiche le pop-up pour ajouter un livre */}
       {showAddBookPopup && (
-        <AddBookPopup
-          authors={authors}
-          onAddBook={handleAddBook}
-          onClose={() => setShowAddBookPopup(false)}
+  <AddBookPopup
+    authors={authors}
+    books={books}
+    setBooks={setBooks}
+    setShowAddBookPopup={setShowAddBookPopup}
+    onAddBook={async (title, yearPublished, authorId) => {
+      try {
+        await api.post('/books', { title, yearPublished, authorId });
+        setShowAddBookPopup(false);
+        await fetchBooks(); // Actualise la liste des livres après l'ajout
+        alert("Livre ajouté avec succès !"); // Affiche le message de confirmation
+      } catch (error) {
+        console.error("Erreur lors de l'ajout du livre:", error);
+      }
+    }}
+    onClose={() => setShowAddBookPopup(false)}
+    onConfirm={handleConfirmAddBook} // Appel de la confirmation
+  />
+)}
+
+      {showDeletePopup && (
+        <DeleteConfirmationPopup
+          onConfirm={handleDelete}
+          onCancel={() => setShowDeletePopup(false)}
         />
       )}
     </div>

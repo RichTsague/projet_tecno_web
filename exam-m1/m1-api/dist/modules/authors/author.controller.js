@@ -29,6 +29,17 @@ let AuthorController = class AuthorController {
         const author = await this.authorService.createAuthor(input);
         return author_presenter_1.AuthorPresenter.from(author);
     }
+    async getAuthorById(authorId) {
+        const author = await this.authorService.getAuthorById(authorId);
+        return author_presenter_1.AuthorPresenter.from(author);
+    }
+    async updateAuthor(authorId, input) {
+        const updatedAuthor = await this.authorService.updateAuthor(authorId, input);
+        return author_presenter_1.AuthorPresenter.from(updatedAuthor);
+    }
+    async deleteAuthor(authorId) {
+        await this.authorService.deleteAuthor(authorId);
+    }
 };
 exports.AuthorController = AuthorController;
 __decorate([
@@ -44,6 +55,28 @@ __decorate([
     __metadata("design:paramtypes", [author_dto_1.CreateAuthorDto]),
     __metadata("design:returntype", Promise)
 ], AuthorController.prototype, "createAuthor", null);
+__decorate([
+    (0, common_1.Get)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthorController.prototype, "getAuthorById", null);
+__decorate([
+    (0, common_1.Patch)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, author_dto_1.UpdateAuthorDto]),
+    __metadata("design:returntype", Promise)
+], AuthorController.prototype, "updateAuthor", null);
+__decorate([
+    (0, common_1.Delete)(':id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AuthorController.prototype, "deleteAuthor", null);
 exports.AuthorController = AuthorController = __decorate([
     (0, common_1.Controller)('/authors'),
     __metadata("design:paramtypes", [author_service_1.AuthorService])

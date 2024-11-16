@@ -10,9 +10,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthorRepository = void 0;
+const common_1 = require("@nestjs/common");
 const typeorm_1 = require("typeorm");
 const author_entity_1 = require("../database/entities/author.entity");
-const common_1 = require("@nestjs/common");
 let AuthorRepository = class AuthorRepository {
     constructor(dataSource) {
         this.dataSource = dataSource;
@@ -24,6 +24,18 @@ let AuthorRepository = class AuthorRepository {
     async createAuthor(input) {
         const result = await this.authorRepository.save(this.authorRepository.create(input));
         return result;
+    }
+    async save(author) {
+        return this.authorRepository.save(author);
+    }
+    async findById(authorId) {
+        return this.authorRepository.findOne({ where: { id: authorId } });
+    }
+    async updateAuthor(authorId, input) {
+        return this.authorRepository.save(input);
+    }
+    async deleteAuthor(authorId) {
+        await this.authorRepository.delete(authorId);
     }
 };
 exports.AuthorRepository = AuthorRepository;
