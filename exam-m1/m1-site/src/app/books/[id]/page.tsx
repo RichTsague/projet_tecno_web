@@ -1,23 +1,55 @@
 'use client';
 
-import styles from './BookDetails.module.css'; // Import du fichier CSS
+import styles from './BookDetails.module.css';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import api from '../../services/api';
+
+interface Author {
+  id: number;
+  firstName: string;
+  lastName: string;
+}
+
+interface Book {
+  id: number;
+  title: string;
+  yearPublished: number;
+  author: Author;
+}
 
 export default function BookDetails({ params }: { params: { id: string } }) {
   const router = useRouter();
-  const [books, setBooks] = useState([
-    { id: 1, title: 'Les Misérables', author: 'Victor Hugo', year: 1862 },
-    { id: 2, title: 'L’Étranger', author: 'Albert Camus', year: 1942 },
-    { id: 3, title: 'Le Père Goriot', author: 'Honoré de Balzac', year: 1835 },
-  ]);
+  const [book, setBook] = useState<Book | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const book = books.find((b) => b.id === parseInt(params.id));
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await api.get(`/books/${params.id}`);
+        setBook(response.data);
+      } catch (error) {
+        console.error('Erreur lors de la récupération des détails du livre:', error);
+        setError('Livre non trouvé.');
+      }
+    };
 
-  if (!book) {
+    fetchBook();
+  }, [params.id]);
+
+  const handleDelete = async () => {
+    try {
+      await api.delete(`/books/${params.id}`);
+      router.push('/books');
+    } catch (error) {
+      console.error("Erreur lors de la suppression du livre:", error);
+    }
+  };
+
+  if (error) {
     return (
       <div className={styles.container}>
-        <p className={styles.error}>Livre non trouvé.</p>
+        <p className={styles.error}>{error}</p>
         <a href="/books" className={`${styles.button} ${styles.return}`}>
           Retour à la liste des livres
         </a>
@@ -25,22 +57,24 @@ export default function BookDetails({ params }: { params: { id: string } }) {
     );
   }
 
-  const handleDelete = () => {
-    const updatedBooks = books.filter((b) => b.id !== book.id);
-    setBooks(updatedBooks);
-    router.push('/books');
-  };
+  if (!book) {
+    return (
+      <div className={styles.container}>
+        <p className={styles.loading}>Chargement des détails du livre...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>{book.title}</h1>
       <p className={styles.text}>
         <strong>Auteur : </strong>
-        {book.author}
+        {book.author.firstName} {book.author.lastName}
       </p>
       <p className={styles.text}>
         <strong>Année : </strong>
-        {book.year}
+        {book.yearPublished}
       </p>
 
       <div className={styles.buttonContainer}>
